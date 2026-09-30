@@ -1,0 +1,280 @@
+{
+  "entities": {
+    "user": {
+      "title": "User",
+      "description": "User profile with role authentication and admin management",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "username": { "type": "string", "maxLength": 50 },
+        "password": { "type": "string", "maxLength": 100 },
+        "email": { "type": "string" },
+        "displayName": { "type": "string", "maxLength": 100 },
+        "role": { "type": "string", "enum": ["teacher_admin", "teacher", "student", "parent"] },
+        "status": { "type": "string", "enum": ["active", "locked", "disabled"] },
+        "phone": { "type": "string", "maxLength": 20 },
+        "studentId": { "type": "string" },
+        "linkedStudentIds": { "type": "array" },
+        "linkedStudentName": { "type": "string", "maxLength": 100 },
+        "classId": { "type": "string" },
+        "className": { "type": "string", "maxLength": 50 },
+        "teacherId": { "type": "string" },
+        "schoolId": { "type": "string" },
+        "schoolName": { "type": "string", "maxLength": 150 },
+        "schoolYearId": { "type": "string", "maxLength": 50 },
+        "lastLoginAt": { "type": "string" },
+        "createdAt": { "type": "string" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["id", "role", "displayName"]
+    },
+    "class": {
+      "title": "Class",
+      "description": "Homeroom class managed by single teacher admin",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string", "maxLength": 50 },
+        "grade": { "type": "string", "maxLength": 20 },
+        "schoolYear": { "type": "string", "maxLength": 20 },
+        "teacherId": { "type": "string" },
+        "teacherName": { "type": "string", "maxLength": 100 },
+        "schoolId": { "type": "string" },
+        "schoolName": { "type": "string", "maxLength": 150 },
+        "room": { "type": "string", "maxLength": 50 },
+        "createdAt": { "type": "string" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["id", "name", "schoolYear", "teacherId"]
+    },
+    "student": {
+      "title": "Student",
+      "description": "Student in a class",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "studentId": { "type": "string" },
+        "classId": { "type": "string" },
+        "teacherId": { "type": "string" },
+        "schoolId": { "type": "string" },
+        "schoolYearId": { "type": "string" },
+        "schoolYear": { "type": "string", "maxLength": 20 },
+        "fullName": { "type": "string", "maxLength": 100 },
+        "studentCode": { "type": "string", "maxLength": 30 },
+        "dob": { "type": "string", "maxLength": 20 },
+        "gender": { "type": "string", "enum": ["Nam", "Nữ", "Khác"] },
+        "address": { "type": "string", "maxLength": 250 },
+        "phone": { "type": "string", "maxLength": 20 },
+        "fatherName": { "type": "string", "maxLength": 100 },
+        "motherName": { "type": "string", "maxLength": 100 },
+        "parentPhone": { "type": "string", "maxLength": 20 },
+        "parentEmail": { "type": "string", "maxLength": 100 },
+        "userId": { "type": "string" },
+        "status": { "type": "string", "enum": ["active", "transferred", "suspended"] },
+        "createdAt": { "type": "string" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["id", "classId", "fullName", "studentCode"]
+    },
+    "attendance": {
+      "title": "Attendance",
+      "description": "Daily attendance record for class",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "classId": { "type": "string" },
+        "date": { "type": "string", "maxLength": 15 },
+        "recordedBy": { "type": "string" },
+        "records": { "type": "array" },
+        "createdAt": { "type": "string" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["id", "classId", "date"]
+    },
+    "score": {
+      "title": "Score",
+      "description": "Student academic score",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "classId": { "type": "string" },
+        "schoolYear": { "type": "string", "maxLength": 20 },
+        "studentId": { "type": "string" },
+        "studentName": { "type": "string", "maxLength": 100 },
+        "subject": { "type": "string", "maxLength": 50 },
+        "scoreType": { "type": "string", "maxLength": 50 },
+        "scoreValue": { "type": "number" },
+        "maxScore": { "type": "number" },
+        "note": { "type": "string", "maxLength": 250 },
+        "date": { "type": "string", "maxLength": 20 },
+        "createdAt": { "type": "string" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["id", "classId", "studentId", "subject", "scoreType", "scoreValue"]
+    },
+    "competition": {
+      "title": "Competition",
+      "description": "Discipline and competition record",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "classId": { "type": "string" },
+        "studentId": { "type": "string" },
+        "studentName": { "type": "string", "maxLength": 100 },
+        "ruleId": { "type": "string" },
+        "ruleTitle": { "type": "string", "maxLength": 100 },
+        "points": { "type": "number" },
+        "type": { "type": "string", "enum": ["bonus", "penalty"] },
+        "note": { "type": "string", "maxLength": 250 },
+        "date": { "type": "string", "maxLength": 20 },
+        "recordedBy": { "type": "string" },
+        "createdAt": { "type": "string" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["id", "classId", "studentId", "points", "type"]
+    },
+    "competitionRule": {
+      "title": "CompetitionRule",
+      "description": "Criteria for points addition and subtraction",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "classId": { "type": "string" },
+        "title": { "type": "string", "maxLength": 100 },
+        "points": { "type": "number" },
+        "type": { "type": "string", "enum": ["bonus", "penalty"] },
+        "category": { "type": "string", "maxLength": 50 },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["id", "title", "points", "type"]
+    },
+    "dailyReport": {
+      "title": "DailyReport",
+      "description": "Daily situation report by teacher",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "classId": { "type": "string" },
+        "date": { "type": "string", "maxLength": 20 },
+        "type": { "type": "string", "enum": ["class", "student"] },
+        "studentId": { "type": "string" },
+        "studentName": { "type": "string", "maxLength": 100 },
+        "academicStatus": { "type": "string", "maxLength": 500 },
+        "disciplineStatus": { "type": "string", "maxLength": 500 },
+        "hygieneStatus": { "type": "string", "maxLength": 300 },
+        "notes": { "type": "string", "maxLength": 1000 },
+        "highlights": { "type": "string", "maxLength": 500 },
+        "createdBy": { "type": "string" },
+        "createdAt": { "type": "string" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["id", "classId", "date", "type"]
+    },
+    "announcement": {
+      "title": "Announcement",
+      "description": "Notice and news posted by teacher",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "classId": { "type": "string" },
+        "title": { "type": "string", "maxLength": 150 },
+        "content": { "type": "string", "maxLength": 2000 },
+        "targetAudience": { "type": "string", "enum": ["all", "students", "parents", "student_specific"] },
+        "targetStudentId": { "type": "string" },
+        "authorName": { "type": "string", "maxLength": 100 },
+        "authorId": { "type": "string" },
+        "priority": { "type": "string", "enum": ["normal", "high", "urgent"] },
+        "date": { "type": "string", "maxLength": 20 },
+        "readBy": { "type": "array" },
+        "createdAt": { "type": "string" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["id", "classId", "title", "content", "targetAudience"]
+    },
+    "conversation": {
+      "title": "Conversation",
+      "description": "Chat thread between teacher and parent/student",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "classId": { "type": "string" },
+        "teacherId": { "type": "string" },
+        "teacherName": { "type": "string", "maxLength": 100 },
+        "parentId": { "type": "string" },
+        "parentName": { "type": "string", "maxLength": 100 },
+        "studentId": { "type": "string" },
+        "studentName": { "type": "string", "maxLength": 100 },
+        "lastMessage": { "type": "string", "maxLength": 500 },
+        "lastMessageAt": { "type": "string" },
+        "unreadTeacher": { "type": "number" },
+        "unreadParent": { "type": "number" },
+        "createdAt": { "type": "string" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["id", "classId", "teacherId"]
+    },
+    "message": {
+      "title": "Message",
+      "description": "Direct message in a conversation",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "conversationId": { "type": "string" },
+        "classId": { "type": "string" },
+        "senderId": { "type": "string" },
+        "senderName": { "type": "string", "maxLength": 100 },
+        "senderRole": { "type": "string", "enum": ["teacher", "parent", "student"] },
+        "recipientId": { "type": "string" },
+        "content": { "type": "string", "maxLength": 1000 },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["id", "conversationId", "senderId", "content"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "user",
+      "description": "User profiles and role assignments"
+    },
+    "/classes/{classId}": {
+      "schema": "class",
+      "description": "Homeroom classes"
+    },
+    "/students/{studentId}": {
+      "schema": "student",
+      "description": "Student profiles in homeroom classes"
+    },
+    "/attendance/{attendanceId}": {
+      "schema": "attendance",
+      "description": "Attendance logs by day"
+    },
+    "/scores/{scoreId}": {
+      "schema": "score",
+      "description": "Academic scores"
+    },
+    "/competitions/{competitionId}": {
+      "schema": "competition",
+      "description": "Discipline and emulation points"
+    },
+    "/competitionRules/{ruleId}": {
+      "schema": "competitionRule",
+      "description": "Emulation criteria rules"
+    },
+    "/dailyReports/{reportId}": {
+      "schema": "dailyReport",
+      "description": "Teacher daily observations and reports"
+    },
+    "/announcements/{announcementId}": {
+      "schema": "announcement",
+      "description": "Class notices and bulletins"
+    },
+    "/conversations/{conversationId}": {
+      "schema": "conversation",
+      "description": "Teacher-parent chat channels"
+    },
+    "/messages/{messageId}": {
+      "schema": "message",
+      "description": "Direct chat messages"
+    }
+  }
+}

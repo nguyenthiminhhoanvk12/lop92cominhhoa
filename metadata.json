@@ -1,0 +1,6 @@
+{
+  "name": "Quản Lý Lớp Chủ Nhiệm",
+  "description": "Hệ thống quản lý lớp học chủ nhiệm hiện đại kết nối Giáo viên, Học sinh và Phụ huynh với Firebase Cloud và trợ lý Gemini AI.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
